@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${subject}">Confirmation de votre action</title>
+    <style>
+        /* Même style que ton email de réinitialisation, inchangé */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #24044b 0%, #3a0a6b 50%, #24044b 100%);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .email-container {
+            max-width: 650px;
+            margin: 20px auto;
+            background: white;
+            color: #333333;
+            padding: 0;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(36, 4, 75, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .email-header {
+            background: linear-gradient(135deg, #24044b, #3a0a6b);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .email-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .logo-container {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo::before {
+            content: "🛡️";
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            margin-top: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .email-content {
+            padding: 50px 40px;
+            background: white;
+            position: relative;
+        }
+
+        .title {
+            text-align: center;
+            color: #24044b;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .message-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .greeting {
+            font-weight: bold;
+            color: #24044b;
+            font-size: 1.2rem;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: #ffffff !important;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+            text-decoration: none;
+        }
+
+        .url-section {
+            background: rgba(36, 4, 75, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 4px solid #24044b;
+        }
+
+        .url-label {
+            font-weight: bold;
+            color: #24044b;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .url {
+            word-break: break-all;
+            color: #24044b;
+            font-weight: bold;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px dashed #24044b;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .url:hover {
+            background: #f8f9ff;
+            transform: translateX(5px);
+        }
+
+        .security-notice {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(238, 90, 36, 0.1));
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+
+        .security-notice p {
+            margin: 0;
+            color: #d63031;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .security-notice p::before {
+            content: "⚠️";
+            font-size: 1.2rem;
+        }
+
+        .signature {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+            color: #24044b;
+            font-weight: bold;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #24044b, #3a0a6b);
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            position: relative;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .company-slogan {
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .icon-1 { top: 20%; left: 10%; animation-delay: 0s; }
+        .icon-2 { top: 60%; right: 15%; animation-delay: 2s; }
+        .icon-3 { bottom: 30%; left: 20%; animation-delay: 4s; }
+
+        @media (max-width: 600px) {
+            .email-container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .email-content {
+                padding: 30px 25px;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="email-header">
+        <div class="logo-container">
+            <div class="logo" th:text="${subject}">Confirmation de votre action</div>
+        </div>
+    </div>
+
+    <div class="email-content">
+        <p class="message-text greeting">Bonjour <span th:text="${name}">Utilisateur</span>,</p>
+
+        <p class="message-text" th:text="${text}">
+        </p>
+        <div class="btn-container" th:if="${url != null}">
+            <a th:href="${url}" class="btn" target="_blank">Se connecter sur E-Commune</a>
+        </div>
+
+        <div class="signature">
+            <p>Cordialement,<br/>
+                <strong>L'équipe E-Commune</strong></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <p>© 2025 E-Commune - Tous droits réservés.</p>
+            <p class="company-slogan">Pour la souveraineté numérique de la Guinée.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

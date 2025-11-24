@@ -1,0 +1,37 @@
+quota:
+  email: 3
+
+spring:
+  profiles:
+    active: dev  # Par d�faut
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health  # expose info et health
+info:
+  app:
+    name: E-Commune
+    version: 1.0.0
+api:
+  key: 1234567890-SECRET-KEY
+
+smac:
+  token:
+    expiration-hours: 3
+    
+site:
+  cgu: https://samory.army/politiques-confidentialites

@@ -1,0 +1,38 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  mail:
+    email_from: noreply@e-commune.net
+    email_to: contact@e-commune.net
+    # host: stmp.gmail.com
+    host: email-smtp.us-east-1.amazonaws.com
+    port: 587
+    #username: mavillepropre224@gmail.com
+    #password: jagijwlhdduaqequ
+    username: AKIA2GW7SPSGWDT5NFPS
+    password: BHoBZkHnqniOagEaUfRcXn6+GMvQ2x8RGoiY+ApxxCLV
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/ma_base_dev
+    username: dev_user
+    password: dev_pass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+api:
+  key: 1234567890-SECRET-KEY
+
+encryption:
+  secret-key: MyS3cr3tK3y12345 #16 caractères
+
+samory:
+  urls:
+    site: https://api-ecommune.samory.army
