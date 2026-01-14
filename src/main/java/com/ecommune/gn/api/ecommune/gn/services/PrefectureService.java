@@ -40,10 +40,11 @@ public class PrefectureService {
 
         if (name == null || name.trim().isEmpty()) {
             // No filter → return all prefectures
-            return jdbcTemplate.query(baseSql, PrefectureService::mapRowToPrefectureDTO);
+            String sql = baseSql + " ORDER BY p.name ASC";
+            return jdbcTemplate.query(sql, PrefectureService::mapRowToPrefectureDTO);
         } else {
             // Filter by name
-            String filteredSql = baseSql + " WHERE p.name LIKE ?";
+            String filteredSql = baseSql + " WHERE p.name LIKE ? ORDER BY p.name ASC";
             return jdbcTemplate.query(filteredSql, PrefectureService::mapRowToPrefectureDTO, "%" + name + "%");
         }
     }

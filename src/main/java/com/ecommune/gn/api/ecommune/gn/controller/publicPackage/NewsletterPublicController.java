@@ -14,31 +14,18 @@ import com.ecommune.gn.api.ecommune.gn.model.ContactUsMessage;
 import com.ecommune.gn.api.ecommune.gn.model.NewsletterSubscriber;
 import com.ecommune.gn.api.ecommune.gn.services.NewsletterService;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+@Hidden
 @RestController
 @RequestMapping("/api/v1/public/newsletter")
 @RequiredArgsConstructor
-@Tag(name = "Newsletter", description = "Endpoints for newsletters")
 public class NewsletterPublicController {
 
     private final NewsletterService newsletterService;
 
-    @Operation(
-            summary = "Subscribe to the newsletter",
-            description = "Allows anyone to subscribe to the newsletter."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Subscribed successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid email or request"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
     @PostMapping("/subscribe")
     public ResponseEntity<ApiResult> subscribe(@Valid @RequestBody NewsletterRequestDTO request) {
         ApiResult result = new ApiResult();
@@ -54,15 +41,6 @@ public class NewsletterPublicController {
         return ResponseEntity.status(result.getCode()).body(result);
     }
 
-    @Operation(
-            summary = "Unsubscribe from the newsletter",
-            description = "Allows anyone to unsubscribe from the newsletter."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Unsubscribed successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid email or request"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
     @PostMapping("/unsubscribe")
     public ResponseEntity<ApiResult> unsubscribe(@Valid @RequestBody NewsletterRequestDTO request) {
         ApiResult result = new ApiResult();
@@ -80,15 +58,6 @@ public class NewsletterPublicController {
         return ResponseEntity.status(result.getCode()).body(result);
     }
    
-    @Operation(
-            summary = "Send a contact message",
-            description = "Allows anyone to send a contact message."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Contact message sent successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid request"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
     @PostMapping("/contact-us")
     public ResponseEntity<ApiResult> contactUs(@Valid @RequestBody ContactUsRequestDTO request) {
         ApiResult result = new ApiResult();

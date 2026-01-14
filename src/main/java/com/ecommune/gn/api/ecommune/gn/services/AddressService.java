@@ -17,18 +17,15 @@ public class AddressService {
 	private final AddressRepository addressRepository;
 
     public List<AddressDTO> searchAddresses(
-            String countryName,
-            String regionName,
-            String prefectureName,
-            String cityName,     // branch
-            String districtName, // class
-            String sectorName,   // section
-            String completeText,  // complete_text
-            String postalCode,   // branch code
-            BigDecimal lat, 
-            BigDecimal lng
+            String query
     ){
-    	return addressRepository.searchAddresses(countryName, regionName, prefectureName, cityName, districtName, sectorName, completeText, postalCode, lat, lng);
+    	return addressRepository.searchAddresses(query);
+    }
+    
+
+    public AddressDTO lookupAddress(BigDecimal lat, BigDecimal lng)
+    {
+    	return addressRepository.lookupAddress(lat, lng);
     }
     
 }

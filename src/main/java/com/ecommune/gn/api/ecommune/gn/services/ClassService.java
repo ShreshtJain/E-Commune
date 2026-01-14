@@ -38,9 +38,10 @@ private final JdbcTemplate jdbcTemplate;
 				    """;
 
 	    if (name != null && !name.trim().isEmpty()) {
-	        baseSql += " AND LOWER(c.name) LIKE LOWER(?)";
+	        baseSql += " AND LOWER(c.name) LIKE LOWER(?) ORDER BY c.name ASC";
 	        return jdbcTemplate.query(baseSql, ClassService::mapRowToClassDTO, city, "%" + name + "%");
 	    } else {
+	    	baseSql+= " ORDER BY c.name ASC";
 	        return jdbcTemplate.query(baseSql, ClassService::mapRowToClassDTO, city);
 	    }
 	}

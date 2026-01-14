@@ -37,7 +37,7 @@ public class SectionService {
 	    """;
 
 	    if (name != null && !name.trim().isEmpty()) {
-	        sql += " AND LOWER(s.name) LIKE LOWER(?)";
+	        sql += " AND LOWER(s.name) LIKE LOWER(?) ORDER BY s.name ASC";
 	        return jdbcTemplate.query(
 	                sql,
 	                SectionService::mapRowToSectionDTO,
@@ -45,6 +45,7 @@ public class SectionService {
 	                "%" + name + "%"
 	        );
 	    } else {
+	    	sql += "ORDER BY s.name ASC";
 	        return jdbcTemplate.query(sql, SectionService::mapRowToSectionDTO, district);
 	    }
 	}

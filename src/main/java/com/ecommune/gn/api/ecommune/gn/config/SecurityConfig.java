@@ -33,9 +33,8 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOriginPatterns(List.of(
                 "http://localhost:4200",
-                "https://samory-prod.vercel.app",
-                "http://127.0.0.1:4200",
-                "https://mon-aide-cyber.samory.army"
+                "https://maps.e-commune.net",
+                "http://127.0.0.1:4200"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));

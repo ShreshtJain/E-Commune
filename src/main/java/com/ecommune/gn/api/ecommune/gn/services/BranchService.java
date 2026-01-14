@@ -46,10 +46,11 @@ public class BranchService {
         		""";
         
         if (name == null || name.trim().isEmpty()) {
-            return jdbcTemplate.query(sql, BranchService::mapRowToBranchDTO);
+            String baseSql = sql + " ORDER BY b.name ASC";
+            return jdbcTemplate.query(baseSql, BranchService::mapRowToBranchDTO);
         } else {
             // Filter by name
-            String filteredSql = sql + " WHERE b.name LIKE ?";
+            String filteredSql = sql + " WHERE b.name LIKE ? ORDER BY b.name ASC";
             return jdbcTemplate.query(filteredSql, BranchService::mapRowToBranchDTO, "%" + name + "%");
         }
     }

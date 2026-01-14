@@ -18,7 +18,7 @@ public class RoadService {
 
 private final JdbcTemplate jdbcTemplate;
     
-public List<RoadDTO> getRoadsByName(Integer branchId, String name) {
+public List<RoadDTO> getRoadsByName(String name) {
     String sql = """
             SELECT
                 r.id,
@@ -50,17 +50,18 @@ public List<RoadDTO> getRoadsByName(Integer branchId, String name) {
             LEFT JOIN branch b ON r.branch_id = b.id
             LEFT JOIN class cl ON r.class_id = cl.id
             LEFT JOIN section s ON r.section_id = s.id
-            WHERE r.branch_id = ?
+            WHERE 1 = 1
             """;
 
     List<Object> params = new ArrayList<>();
-    params.add(branchId);
 
     if (name != null && !name.trim().isEmpty()) {
         sql += " AND LOWER(r.name) LIKE LOWER(?)";
         params.add("%" + name + "%");
     }
 
+    sql+= " ORDER BY r.name ASC";
+    
     return jdbcTemplate.query(sql, RoadService::mapRowToRoadDTO, params.toArray());
 }
     

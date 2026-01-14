@@ -48,7 +48,7 @@ public class NewsletterService {
         subscriber.setSubscribedAt(LocalDateTime.now());
         subscriber.setActive(true);
         NewsletterSubscriber returnSubscriber = subscriberRepo.save(subscriber);
-        
+
         mailService.sendConfirmationNotification(
         	    email,
         	    "Thank you for subscribing to our newsletter!",
@@ -56,7 +56,7 @@ public class NewsletterService {
         	    "Confirm your newsletter subscription",
         	    null
         	);
-        
+
         return returnSubscriber;
     }
 

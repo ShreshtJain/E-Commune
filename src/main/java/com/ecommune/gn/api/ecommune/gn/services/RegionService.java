@@ -38,10 +38,11 @@ public class RegionService {
 
         if (name == null || name.trim().isEmpty()) {
             // No filter
-            return jdbcTemplate.query(baseSql, RegionService::mapRowToRegionDTO);
+            String sql = baseSql + " ORDER BY r.name ASC";
+            return jdbcTemplate.query(sql, RegionService::mapRowToRegionDTO);
         } else {
             // Filter by name
-            String filteredSql = baseSql + " WHERE r.name LIKE ?";
+            String filteredSql = baseSql + " WHERE r.name LIKE ? ORDER BY r.name ASC";
             return jdbcTemplate.query(filteredSql, RegionService::mapRowToRegionDTO, "%" + name + "%");
         }
     }

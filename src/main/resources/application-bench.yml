@@ -2,18 +2,25 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+    database-platform: org.hibernate.dialect.MariaDBDialect
   mail:
     email_from: noreply@e-commune.net
     email_to: contact@e-commune.net
-    host: smtp.gmail.com
-    port: 587
+    host: smtp.hostinger.com
+    port: 465
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
           auth: true
-          starttls.enable: true
+          ssl.enable: true              # Changed from starttls.enable
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
   datasource:
     url: jdbc:mysql://${DATABASE_HOSTNAME}:${DATABASE_PORT}/${DATABASE_NAME}
     username: ${DATABASE_USERNAME}

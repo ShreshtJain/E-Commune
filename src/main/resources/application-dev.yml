@@ -9,18 +9,18 @@ spring:
   mail:
     email_from: noreply@e-commune.net
     email_to: contact@e-commune.net
-    # host: stmp.gmail.com
-    host: email-smtp.us-east-1.amazonaws.com
-    port: 587
-    #username: mavillepropre224@gmail.com
-    #password: jagijwlhdduaqequ
-    username: AKIA2GW7SPSGWDT5NFPS
-    password: BHoBZkHnqniOagEaUfRcXn6+GMvQ2x8RGoiY+ApxxCLV
+    host: smtp.hostinger.com
+    port: 465
+    username: noreply@e-commune.net
+    password: OpvNl3lTH7tOJQz2nUFQdvQL8Bd1Ij#
     properties:
       mail:
         smtp:
           auth: true
-          starttls.enable: true
+          ssl.enable: true              # Changed from starttls.enable
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
   datasource:
     url: jdbc:mysql://localhost:3306/ma_base_dev
     username: dev_user

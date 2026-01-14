@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,14 +37,13 @@ public class RoadPublicController {
             @ApiResponse(responseCode = "200", description = "Roads successfully retrieved"),
             @ApiResponse(responseCode = "400", description = "Invalid request")
     })
-    @GetMapping("/{city}")
+    @GetMapping
     public ResponseEntity<ApiResult> searchRoads(
-    		@PathVariable Integer city,
             @RequestParam(required = false) String name
     ) {
         ApiResult apiResult = new ApiResult();
         try {
-            List<RoadDTO> roads = roadService.getRoadsByName(city, name);
+            List<RoadDTO> roads = roadService.getRoadsByName(name);
             apiResult.setCode(HttpStatus.OK.value());
             apiResult.setMessage("Roads retrieved successfully");
             apiResult.setData(roads);
